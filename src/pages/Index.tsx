@@ -9,6 +9,13 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   useEffect(() => {
+    // Handle GitHub Pages 404 redirect
+    // This helps with direct URL access on GitHub Pages
+    const path = window.location.pathname;
+    if (path !== '/' && path !== '/index.html' && !path.includes('.')) {
+      window.history.replaceState(null, '', '/');
+    }
+    
     // Intersection Observer for animation
     const observer = new IntersectionObserver(
       (entries) => {

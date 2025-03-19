@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
@@ -13,6 +12,14 @@ interface ProductCardProps {
 const ProductCard = ({ title, description, imageUrl, delay = 0 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
+  const getImageUrl = (url: string) => {
+    if (url.startsWith('http') || url.startsWith('data:')) {
+      return url;
+    }
+    
+    return new URL(url, import.meta.url).href;
+  };
+  
   return (
     <div 
       className="product-card rounded-xl overflow-hidden bg-white slide-in-animation"
@@ -24,7 +31,7 @@ const ProductCard = ({ title, description, imageUrl, delay = 0 }: ProductCardPro
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out"
           style={{ 
-            backgroundImage: `url(${imageUrl})`,
+            backgroundImage: `url(${getImageUrl(imageUrl)})`,
             transform: isHovered ? 'scale(1.05)' : 'scale(1)'
           }}
         />
